@@ -10,7 +10,7 @@ import HourlyForeCast from './components/hourly_weather_forecast';
 import logo from './assets/Logo.svg';
 
 function App() {
-  const [city , setCity] = useState('Aukland');
+  const [city , setCity] = useState('Auckland');
   const [weatherData , setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,7 +27,15 @@ function App() {
       setError('');
       try {
         const data = await getWeatherData(city);
-        const { mintemp_c , maxtemp_c} = data.forecast.forecastday[0].day;
+
+        // Check if data is valid
+        if (!data || !data.forecast || !data.current || !data.location) {
+          setError("Could not fetch weather data. Please try another city.");
+          setWeatherData(null);
+          return;
+        }
+
+        const { mintemp_c , maxtemp_c } = data.forecast.forecastday[0].day;
 
         setWeatherData({
           current: { ...data.current , mintemp_c , maxtemp_c },
@@ -37,6 +45,7 @@ function App() {
         });
       } catch (err) {
         setError(`Error: ${err.message || err}`);
+        setWeatherData(null);
       } finally {
         setLoading(false);
       }
@@ -55,21 +64,22 @@ function App() {
 
       <div className="container">
         <div className="search-logo-wrapper">
-  <img src={logo} alt="Logo" className="app-logo" />
-  <SearchBar onSearch={setCity} />
-  <a
-    href="https://github.com/yourusername/your-repo"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="github-button"
-  >
-    <img
-      src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
-      alt="GitHub"
-      className="github-icon"
-    />
-  </a>
-</div>
+          <img src={logo} alt="Logo" className="app-logo" />
+          <SearchBar onSearch={setCity} />
+          <a
+            href="https://github.com/yourusername/your-repo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="github-button"
+          >
+            <img
+              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
+              alt="GitHub"
+              className="github-icon"
+            />
+          </a>
+        </div>
+
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {weatherData && (
