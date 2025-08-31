@@ -1,0 +1,260 @@
+/* Main app container */
+.app .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fullscreen app layout */
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inner content container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 100%;
+  z-index: 1;
+  transform: scale(0.72);
+  transform-origin: center;
+}
+
+/* Background layers for different times of day */
+.bg-sunrise, .bg-day, .bg-sunset, .bg-night {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.bg-sunrise { background-color: #fff7e6; }
+.bg-sunrise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle 750px at 50% 50%, #fbbf24, transparent);
+}
+
+.bg-day { background-color: #ffffff; }
+.bg-day::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle 900px at 50% 30%, #60a5fa, transparent);
+}
+
+.bg-sunset { background-color: #fff1f0; }
+.bg-sunset::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle 800px at 50% 50%, #f97316, transparent);
+}
+
+.bg-night { background-color: #020617; }
+.bg-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle 500px at 50% 200px, #3e3e3e, transparent);
+}
+
+/* Forecast sections container */
+.forecast-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Hourly forecast card styling */
+.forecast-hourly {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 0.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Weekly forecast container styling */
+.forecast-weekly {
+  background: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 0.5rem 0;
+}
+
+/* Horizontal scroll container for hourly forecast */
+.hourly-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar styling */
+.hourly-container::-webkit-scrollbar {
+  height: 6px;
+}
+.hourly-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+/* Each hourly card */
+.hour-card {
+  min-width: 70px;
+  flex: 0 0 auto;
+  text-align: center;
+  background: #ffffff;
+  color: #000;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hour-time {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.hour-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0.3rem auto;
+}
+
+.hour-temp {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.hour-rain {
+  font-size: 0.75rem;
+  color: #2563eb;
+}
+
+/* Weekly forecast card list */
+.weekly-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.week-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border-radius: 0.75rem;
+  padding: 0.6rem 1rem;
+  box-shadow: none;
+}
+
+.week-day {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.week-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.week-temp {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Top forecast section: current weather + weekly side by side */
+.top-forecast {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.weekly-side {
+  flex: 1;
+}
+
+/* Current weather card sizing */
+.top-forecast > .current-weather-card {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Space between forecast sections */
+.forecast-section + .forecast-section {
+  margin-top: 1rem;
+}
+
+/* Search bar + logo wrapper */
+.search-logo-wrapper {
+  width: 100%;
+  max-width: 950px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app-logo {
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Search bar grows to fill remaining space */
+.search-logo-wrapper > .search-bar {
+  flex: 1;
+  max-width: 550px;
+}
+
+/* GitHub icon button */
+.github-button {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.github-icon {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s, filter 0.3s, rotate 0.3s; 
+  cursor: pointer;
+}
+
+/* Hover animation for GitHub icon */
+.github-button:hover .github-icon {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Keyframes for wiggle animation */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+  75% { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}

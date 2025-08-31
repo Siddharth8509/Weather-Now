@@ -1,0 +1,82 @@
+.current-weather {
+  position: relative;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  width: 340px;
+  color: white;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+
+  /* Glass effect background */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+
+  /* Border animation effect */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.current-weather::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(270deg, #ff8c00, #ff0080, #00e0ff, #ff8c00);
+  background-size: 300% 300%;
+  animation: gradientBorder 6s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes gradientBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.location {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.condition {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+}
+
+.temp {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.feels-like {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.weather-details div {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
